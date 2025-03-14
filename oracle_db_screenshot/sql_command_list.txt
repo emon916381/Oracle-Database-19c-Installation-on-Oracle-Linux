@@ -1,0 +1,93 @@
+#show all db user
+SELECT username, account_status, default_tablespace FROM dba_users;
+
+#current user
+ show user;
+
+##lock unlock user
+SQL> alter user ORDDATA account unlock;
+
+User altered.
+
+SQL>
+SQL> alter user outln account unlock;
+
+User altered.
+
+###Create_user
+CREATE USER emon IDENTIFIED BY emon1234;
+ALTER SESSION SET CONTAINER=PDB;
+
+ALTER USER EMON IDENTIFIED BY emon1234;
+
+SELECT USER outln IDENTIFIED BY emon1234;
+
+
+SQL> SHOW CON_NAME;
+
+CON_NAME
+------------------------------
+CDB$ROOT
+SQL>
+SQL>
+SQL>set line 999;
+SQL> SELECT name, open_mode FROM v$pdbs;
+
+NAME                                                                                                                             OPEN_MODE
+-------------------------------------------------------------------------------------------------------------------------------- ----------
+PDB$SEED                                                                                                                         READ ONLY
+PDB1                                                                                                                             MOUNTED
+PDB2                                                                                                                             MOUNTED
+SQL> alter pluggable database pdb1 open;
+
+###GRANT CONNECT, RESOURCE TO emon;
+
+SQL> ALTER SESSION SET CONTAINER=ORCLPDB;
+ERROR:
+ORA-65011: Pluggable database ORCLPDB does not exist.
+
+
+SQL> ALTER SESSION SET CONTAINER=PDB;
+ERROR:
+ORA-65011: Pluggable database PDB does not exist.
+
+
+SQL> ALTER SESSION SET CONTAINER=PDB1;
+
+Session altered.
+
+SQL>
+SQL>
+SQL>
+SQL>
+SQL>
+SQL> CREATE USER emon IDENTIFIED BY emon1234;
+CREATE USER emon IDENTIFIED BY emon1234
+*
+ERROR at line 1:
+ORA-01109: database not open
+
+
+SQL> SHOW CON_NAME;
+
+CON_NAME
+------------------------------
+PDB1
+SQL>
+SQL>
+SELECT 1, OWNER, OBJECT_NAME FROM DBA_OBJECTS WHERE OBJECT_TYPE = 'TABLE';
+
+CREATE TABLE TEAM ( TeamName VARCHAR(255), City VARCHAR(255));
+
+SELECT username, account_status FROM dba_users WHERE username = 'emon' AND con_id = (SELECT con_id FROM v$pdbs WHERE name = 'PDB1');
+
+SELECT owner, table_name, tablespace_name, created, last_analyzed, num_rows FROM dba_tables WHERE table_name = 'TEAM';
+
+SELECT name, open_mode FROM v$pdbs;
+
+
+sqlplus emon/emon1234@10.10.11.154:1521/CDB PDBNAME=pdb1
+
+
+
+
